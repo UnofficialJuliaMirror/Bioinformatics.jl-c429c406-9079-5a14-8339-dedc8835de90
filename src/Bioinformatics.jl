@@ -2,6 +2,7 @@ __precompile__()
 
 module Bioinformatics
 
-include("types.jl")
+include("io.jl")
+include("stats.jl")
 
 end
