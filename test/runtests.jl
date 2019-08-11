@@ -14,6 +14,11 @@ using Test
             "ATCTGTCAT",
             "DNA"
         )
+
+        @test Bioinformatics.translation(seq) == Bioinformatics.Sequence(
+            "MTD",
+            "AA"
+        )
     end
 
     @testset "stats.jl" begin

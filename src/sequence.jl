@@ -1,7 +1,7 @@
 const alphabets = Dict(
     "DNA" => "ACGTMRWSYKVHDBN",
     "RNA" => "ACGUMRWSYKVHDBN",
-    "AA" => "ACDEFGHIKLMNPQRSTVWY*"
+    "AA" => "ACDEFGHIKLMNPQRSTVWY-"
 )
 
 const complements = Dict(
@@ -103,9 +103,9 @@ const codons = Dict(
     "TGG" => 'W',
     "TAT" => 'Y',
     "TAC" => 'Y',
-    "TAA" => '*',
-    "TAG" => '*',
-    "TGA" => '*'
+    "TAA" => '-',
+    "TAG" => '-',
+    "TGA" => '-'
 )
 
 struct Sequence
@@ -144,15 +144,28 @@ function reverse_complement(s::Sequence)
     return Sequence(string(reverse_complement...), s.type)
 end
 
-function translation(s::Sequence)
+function translation(s::Sequence, start_pos::Int64=1)
     if (s.type != "DNA") && (s.type != "RNA")
         error("Amino acid sequence cannot be translated.")
     end
     len = length(s)
     translated_seq = Char[]
-    for i in 1:3:(len - 2)
+    for i in start_pos:3:(len - 2)
         cod = s[i:i+2]
         push!(translated_seq, codons[cod])
     end
     return Sequence(string(translated_seq...), "AA")
+end
+
+function reading_frames(s::Sequence)
+    if (s.type != "DNA") && (s.type != "RNA")
+        error("Amino acid sequence cannot be translated.")
+    end
+    reading_frames = Dict{String, Sequence}()
+    rc = reverse_complement(s)
+    for i in 1:3
+        reading_frames["5'3' Frame $i"] = translation(s, i)
+        reading_frames["3'5' Frame $i"] = translation(rc, i)
+    end
+    return reading_frames
 end

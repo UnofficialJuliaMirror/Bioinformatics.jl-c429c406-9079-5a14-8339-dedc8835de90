@@ -2,14 +2,16 @@ __precompile__()
 
 module Bioinformatics
 
-export readStringFromFile,
+export frequency,
+       gc_content,
        readFASTA,
+       reading_frames,
+       readStringFromFile,
+       reverse_complement,
        Sequence,
        transcription,
-       reverse_complement,
-       translation,
-       frequency,
-       gc_content
+       translation
+
 
 include("io.jl")
 include("sequence.jl")
