@@ -3,6 +3,19 @@ using Test
 
 @testset "Tests" begin
 
+    @testset "sequence.jl" begin
+        seq = Bioinformatics.Sequence("ATGACAGAT", "DNA")
+
+        @test Bioinformatics.transcription(seq) == Bioinformatics.Sequence(
+            "AUGACAGAU",
+            "RNA"
+        )
+        @test Bioinformatics.reverse_complement(seq) == Bioinformatics.Sequence(
+            "ATCTGTCAT",
+            "DNA"
+        )
+    end
+
     @testset "stats.jl" begin
         seq = Bioinformatics.Sequence("atagataactcgcatag", "DNA")
 
