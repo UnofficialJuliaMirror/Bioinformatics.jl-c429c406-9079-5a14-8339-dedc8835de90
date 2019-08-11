@@ -7,6 +7,7 @@ export readStringFromFile,
        Sequence,
        transcription,
        reverse_complement,
+       translation,
        frequency,
        gc_content
 
