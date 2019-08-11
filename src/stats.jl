@@ -1,11 +1,11 @@
 """
-    frequency(seq::String)
+    frequency(seq::Sequence)
 
     Calculate frequencies of symbols.
 """
-function frequency(seq::String)
+function frequency(seq::Sequence)
     freqs = Dict()
-    for s in seq
+    for s in seq.seq
         if haskey(freqs, s)
             freqs[s] += 1
         else
@@ -16,14 +16,14 @@ function frequency(seq::String)
 end
 
 """
-    gc_content(seq::String)
+    gc_content(seq::Sequence)
 
     Calculate GC content of a DNA sequence.
 """
-function gc_content(seq::String)
+function gc_content(seq::Sequence)
     gc_count = 0
-    for s in seq
-        if s in "GCgc"
+    for s in seq.seq
+        if s in "GC"
             gc_count += 1
         end
     end
