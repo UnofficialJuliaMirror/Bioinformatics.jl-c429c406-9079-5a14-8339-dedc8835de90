@@ -1,8 +1,3 @@
-"""
-    readStringFromFile(filename::String)
-
-    Loads a text file that contains a DNA/RNA string.
-"""
 function readStringFromFile(filename::String)
     s = open(filename) do f
         read(f, String)
@@ -10,11 +5,6 @@ function readStringFromFile(filename::String)
     return String(strip(s))
 end
 
-"""
-    readFASTA(filename::String)
-
-    Reads a FASTA formatted file.
-"""
 function readFASTA(filename::String)
     data = Dict()
     lines = open(filename) do f

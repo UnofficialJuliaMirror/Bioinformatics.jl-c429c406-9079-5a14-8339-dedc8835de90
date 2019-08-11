@@ -1,8 +1,3 @@
-"""
-    frequency(seq::Sequence)
-
-    Calculate frequencies of symbols.
-"""
 function frequency(seq::Sequence)
     freqs = Dict()
     for s in seq.seq
@@ -15,11 +10,6 @@ function frequency(seq::Sequence)
     return freqs
 end
 
-"""
-    gc_content(seq::Sequence)
-
-    Calculate GC content of a DNA sequence.
-"""
 function gc_content(seq::Sequence)
     gc_count = 0
     for s in seq.seq
