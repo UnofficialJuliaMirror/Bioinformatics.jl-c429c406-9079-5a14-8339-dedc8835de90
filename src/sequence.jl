@@ -1,3 +1,5 @@
+import Base.==
+
 const alphabets = Dict(
     "DNA" => "ACGTMRWSYKVHDBN",
     "RNA" => "ACGUMRWSYKVHDBN",
@@ -132,7 +134,7 @@ function transcription(dna_seq::Sequence)
 end
 
 function reverse_complement(s::Sequence)
-    if (s.type != "DNA") && (s.type != "RNA")
+    if (s.type == "AA")
         error("Amino acid sequence doesn't have reverse complement")
     end
     len = length(s)
@@ -144,8 +146,8 @@ function reverse_complement(s::Sequence)
     return Sequence(string(reverse_complement...), s.type)
 end
 
-function translation(s::Sequence, start_pos::Int64=1)
-    if (s.type != "DNA") && (s.type != "RNA")
+function translation(s::Sequence, start_pos::Int64 = 1)
+    if (s.type == "AA")
         error("Amino acid sequence cannot be translated.")
     end
     len = length(s)
@@ -158,10 +160,10 @@ function translation(s::Sequence, start_pos::Int64=1)
 end
 
 function reading_frames(s::Sequence)
-    if (s.type != "DNA") && (s.type != "RNA")
+    if (s.type == "AA")
         error("Amino acid sequence cannot be translated.")
     end
-    reading_frames = Dict{String, Sequence}()
+    reading_frames = Dict{String,Sequence}()
     rc = reverse_complement(s)
     for i in 1:3
         reading_frames["5'3' Frame $i"] = translation(s, i)
