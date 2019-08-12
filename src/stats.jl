@@ -81,6 +81,3 @@ function protein_mass(seq::Sequence, type="monoisotopic")
     end
     return mass
 end
-
-function relative_entropy(seq::Sequence)
-end
