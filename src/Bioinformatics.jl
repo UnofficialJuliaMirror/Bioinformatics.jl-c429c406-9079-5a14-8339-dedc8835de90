@@ -5,6 +5,7 @@ module Bioinformatics
 export frequency,
        gc_content,
        possible_proteins,
+       protein_mass,
        readFASTA,
        reading_frames,
        readStringFromFile,
@@ -12,7 +13,6 @@ export frequency,
        Sequence,
        transcription,
        translation
-
 
 include("io.jl")
 include("sequence.jl")
