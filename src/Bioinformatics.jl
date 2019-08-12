@@ -2,10 +2,12 @@ __precompile__()
 
 module Bioinformatics
 
-export edit_dist,
+export dotmatrix,
+       edit_dist,
        frequency,
        gc_content,
        hamming_dist,
+       plot_dotmatrix,
        plot_gc_content,
        possible_proteins,
        protein_mass,
@@ -17,10 +19,11 @@ export edit_dist,
        transcription,
        translation
 
+include("sequence.jl")
+include("alignments.jl")
 include("distances.jl")
 include("io.jl")
 include("plots.jl")
-include("sequence.jl")
 include("stats.jl")
 
 end
