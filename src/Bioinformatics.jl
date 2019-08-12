@@ -4,6 +4,7 @@ module Bioinformatics
 
 export frequency,
        gc_content,
+       possible_proteins,
        readFASTA,
        reading_frames,
        readStringFromFile,

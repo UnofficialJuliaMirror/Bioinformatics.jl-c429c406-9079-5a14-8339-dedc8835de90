@@ -171,3 +171,19 @@ function reading_frames(s::Sequence)
     end
     return reading_frames
 end
+
+function possible_proteins(s::Sequence)
+    if (s.type == "AA")
+        error("Amino acid sequence cannot be translated.")
+    end
+    regex = r"M[ACDEFGHIKLMNPQRSTVWY]+(?=-|$)"
+    rfs = reading_frames(s)
+    possible_proteins = Dict{String,Sequence}()
+    for k in keys(rfs)
+        m = match(regex, rfs[k].seq)
+        if m != nothing
+            possible_proteins[k] = Sequence(m.match, "AA")
+        end
+    end
+    return possible_proteins
+end
