@@ -6,6 +6,7 @@ export edit_dist,
        frequency,
        gc_content,
        hamming_dist,
+       plot_gc_content,
        possible_proteins,
        protein_mass,
        readFASTA,
@@ -18,6 +19,7 @@ export edit_dist,
 
 include("distances.jl")
 include("io.jl")
+include("plots.jl")
 include("sequence.jl")
 include("stats.jl")
 

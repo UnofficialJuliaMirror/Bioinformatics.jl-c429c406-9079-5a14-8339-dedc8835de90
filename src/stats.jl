@@ -67,12 +67,21 @@ function gc_content(seq::Sequence)
     return gc_count / length(seq)
 end
 
-function protein_mass(seq::Sequence, type="monoisotopic")
+function gc_content(seq::Sequence, window_size::Int64)
+    gc_contents = Float64[]
+    for i in 1:(length(seq)-window_size)
+        window = Sequence(seq[i:(i+window_size)], seq.type)
+        push!(gc_contents, gc_content(window))
+    end
+    return gc_contents
+end
+
+function protein_mass(seq::Sequence, type = "monoisotopic")
     if seq.type != "AA"
         error("Sequence must be a protein sequence.")
     end
-    if type=="monoisotopic"
-        mass = 	18.01524
+    if type == "monoisotopic"
+        mass = 18.01524
     else
         mass = 18.01056
     end
