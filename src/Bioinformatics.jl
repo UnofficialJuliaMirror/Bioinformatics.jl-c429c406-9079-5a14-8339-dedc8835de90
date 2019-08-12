@@ -2,8 +2,10 @@ __precompile__()
 
 module Bioinformatics
 
-export frequency,
+export edit_dist,
+       frequency,
        gc_content,
+       hamming_dist,
        possible_proteins,
        protein_mass,
        readFASTA,
@@ -14,6 +16,7 @@ export frequency,
        transcription,
        translation
 
+include("distances.jl")
 include("io.jl")
 include("sequence.jl")
 include("stats.jl")
