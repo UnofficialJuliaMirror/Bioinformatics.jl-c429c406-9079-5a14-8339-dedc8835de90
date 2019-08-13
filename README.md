@@ -20,6 +20,10 @@ or install the library with
 
 and you're ready to use!
 
+## Documentation
+
+Please refer [here](https://mrtkp9993.github.io/Bioinformatics.jl/latest/).
+
 ## Contribute
 
 If you find any bugs/issues, please create an issue or fix and create a pull request.
