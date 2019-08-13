@@ -19,6 +19,7 @@ export dotmatrix,
        translation
 
 include("sequence.jl")
+include("data.jl")
 include("alignments.jl")
 include("distances.jl")
 include("io.jl")

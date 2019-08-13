@@ -1,58 +1,7 @@
-const aa_mass = Dict(
-    "monoisotopic" => Dict(
-        'A' => 71.03711,
-        'R' => 156.10111,
-        'N' => 114.04293,
-        'D' => 115.02694,
-        'C' => 103.00919,
-        'E' => 129.04259,
-        'Q' => 128.05858,
-        'G' => 57.02146,
-        'H' => 137.05891,
-        'I' => 113.08406,
-        'L' => 113.08406,
-        'K' => 128.09496,
-        'M' => 131.04049,
-        'F' => 147.06841,
-        'P' => 97.05276,
-        'S' => 87.03203,
-        'T' => 101.04768,
-        'W' => 186.07931,
-        'Y' => 163.06333,
-        'V' => 99.06841
-    ),
-    "average" => Dict(
-        'A' => 71.0788,
-        'R' => 156.1875,
-        'N' => 114.1038,
-        'D' => 115.0886,
-        'C' => 103.1388,
-        'E' => 129.1155,
-        'Q' => 128.1307,
-        'G' => 57.0519,
-        'H' => 137.1411,
-        'I' => 113.1594,
-        'L' => 113.1594,
-        'K' => 128.1741,
-        'M' => 131.1926,
-        'F' => 147.1766,
-        'P' => 97.1167,
-        'S' => 87.0782,
-        'T' => 101.1051,
-        'W' => 186.2132,
-        'Y' => 163.1760,
-        'V' => 99.1326
-    )
-)
-
 function frequency(seq::Sequence)
-    freqs = Dict()
+    freqs = Dict([c => 0 for c in alphabets[seq.type]])
     for s in seq.seq
-        if haskey(freqs, s)
-            freqs[s] += 1
-        else
-            freqs[s] = 1
-        end
+        freqs[s] += 1
     end
     return freqs
 end
@@ -89,4 +38,51 @@ function protein_mass(seq::Sequence, type = "monoisotopic")
         mass += aa_mass[type][aa]
     end
     return mass
+end
+
+function extinction_coeff(n_tyr, n_trp, n_cys::Int64)
+    return 1490 * n_tyr + 5500 * n_trp + 125 * n_cys
+end
+
+function instability_index(seq::Sequence)
+    ii = 10 / length(seq) *
+         sum([instability_values[seq[i:(i+1)]] for i in 1:(length(seq)-1)])
+    return ii
+end
+
+function aliphatic_index(x_ala, x_val, x_ile, x_leu::Float64)
+    return x_ala + 2.9 * x_val + 3.9 * (x_ile + x_leu)
+end
+
+function gravy(seq::Sequence)
+    return sum([hydropathicity[aa] for aa in seq.seq]) / length(seq)
+end
+
+function protparam(seq::Sequence)
+    statistics = Dict()
+    statistics["Number of amino acids"] = length(seq)
+    statistics["Molecular weight"] = protein_mass(seq, "average")
+    statistics["Amino acid composition"] = frequency(seq)
+    statistics["Total number of negatively charged residues (Asp + Glu)"] = statistics["Amino acid composition"]['D'] +
+                                                                            statistics["Amino acid composition"]['E']
+    statistics["Total number of positively charged residues (Arg + Lys)"] = statistics["Amino acid composition"]['R'] +
+                                                                            statistics["Amino acid composition"]['K']
+    statistics["Extinction coefficient"] = extinction_coeff(
+        statistics["Amino acid composition"]['Y'],
+        statistics["Amino acid composition"]['W'],
+        statistics["Amino acid composition"]['C']
+    )
+    statistics["Instability index"] = instability_index(seq)
+    statistics["Aliphatic index"] = aliphatic_index(
+        100 * statistics["Amino acid composition"]['A'] /
+        statistics["Number of amino acids"],
+        100 * statistics["Amino acid composition"]['V'] /
+        statistics["Number of amino acids"],
+        100 * statistics["Amino acid composition"]['I'] /
+        statistics["Number of amino acids"],
+        100 * statistics["Amino acid composition"]['L'] /
+        statistics["Number of amino acids"]
+    )
+    statistics["Grand average of hydropathicity (GRAVY)"] = gravy(seq)
+    return statistics
 end
