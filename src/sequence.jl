@@ -146,6 +146,23 @@ function reverse_complement(s::Sequence)
     return Sequence(string(reverse_complement...), s.type)
 end
 
+function kmers(s::Sequence, k::Int64 = 2)
+    len = length(s)
+    kmer_arr = String[]
+    for i in 1:(len-k+1)
+        kmer = s[i:(i+k-1)]
+        push!(kmer_arr, kmer)
+    end
+    return kmer_arr
+end
+
+function kmers_frequency(s::Sequence, k::Int64 = 2)
+    kmers_arr = kmers(s, k)
+    unique_kmers = unique(kmers_arr)
+    kmers_dict = Dict{String,Int64}([(kmer, count(x -> x == kmer, kmers_arr)) for kmer in unique_kmers])
+    return kmers_dict
+end
+
 function translation(s::Sequence, start_pos::Int64 = 1)
     if (s.type == "AA")
         error("Amino acid sequence cannot be translated.")
