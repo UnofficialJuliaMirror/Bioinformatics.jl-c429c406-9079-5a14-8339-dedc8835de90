@@ -10,7 +10,13 @@ Just include the `Bioinformatics.jl` file with
 include("Bioinformatics.jl")
 ```
 
-and you're ready to use!
+or install the library with
+
+```julia
+(v1.1) pkg> add "https://github.com/mrtkp9993/Bioinformatics.jl"
+```
+
+and you're ready to use! For available functions, please refer [here](Functions.md). 
 
 ## Contribute
 
