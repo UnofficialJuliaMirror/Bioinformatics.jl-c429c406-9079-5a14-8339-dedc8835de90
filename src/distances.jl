@@ -1,3 +1,8 @@
+"""
+    function edit_dist(s1::String, s2::String)
+
+Calculate edit distance between two strings.
+"""
 function edit_dist(s1::String, s2::String)
     m = length(s1)
     n = length(s2)
@@ -21,6 +26,11 @@ function edit_dist(s1::String, s2::String)
     return distance_mat[m+1, n+1]
 end
 
+"""
+    function hamming_dist(s1::String, s2::String)
+
+Calculate Hamming distance between two strings.
+"""
 function hamming_dist(s1::String, s2::String)
     if length(s1) != length(s2)
         error("Both strings must be have same length.")

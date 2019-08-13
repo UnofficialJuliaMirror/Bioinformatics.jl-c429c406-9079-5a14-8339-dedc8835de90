@@ -1,115 +1,6 @@
 import Base.==
 
-const alphabets = Dict(
-    "DNA" => "ACGTMRWSYKVHDBN",
-    "RNA" => "ACGUMRWSYKVHDBN",
-    "AA" => "ACDEFGHIKLMNPQRSTVWY-"
-)
-
-const complements = Dict(
-    "DNA" => Dict(
-        'A' => 'T',
-        'C' => 'G',
-        'G' => 'C',
-        'T' => 'A',
-        'W' => 'W',
-        'S' => 'S',
-        'M' => 'K',
-        'K' => 'M',
-        'R' => 'Y',
-        'Y' => 'R',
-        'B' => 'V',
-        'D' => 'H',
-        'H' => 'D',
-        'V' => 'B',
-        'N' => 'N'
-    ),
-    "RNA" => Dict(
-        'A' => 'U',
-        'C' => 'G',
-        'G' => 'C',
-        'U' => 'A',
-        'W' => 'W',
-        'S' => 'S',
-        'M' => 'K',
-        'K' => 'M',
-        'R' => 'Y',
-        'Y' => 'R',
-        'B' => 'V',
-        'D' => 'H',
-        'H' => 'D',
-        'V' => 'B',
-        'N' => 'N'
-    )
-)
-
-const codons = Dict(
-    "GCT" => 'A',
-    "GCC" => 'A',
-    "GCA" => 'A',
-    "GCG" => 'A',
-    "TGT" => 'C',
-    "TGC" => 'C',
-    "GAT" => 'D',
-    "GAC" => 'D',
-    "GAA" => 'E',
-    "GAG" => 'E',
-    "TTT" => 'F',
-    "TTC" => 'F',
-    "GGT" => 'G',
-    "GGC" => 'G',
-    "GGA" => 'G',
-    "GGG" => 'G',
-    "CAT" => 'H',
-    "CAC" => 'H',
-    "ATA" => 'I',
-    "ATT" => 'I',
-    "ATC" => 'I',
-    "AAA" => 'K',
-    "AAG" => 'K',
-    "TTA" => 'L',
-    "TTG" => 'L',
-    "CTT" => 'L',
-    "CTC" => 'L',
-    "CTA" => 'L',
-    "CTG" => 'L',
-    "ATG" => 'M',
-    "AAT" => 'N',
-    "AAC" => 'N',
-    "CCT" => 'P',
-    "CCC" => 'P',
-    "CCA" => 'P',
-    "CCG" => 'P',
-    "CAA" => 'Q',
-    "CAG" => 'Q',
-    "CGT" => 'R',
-    "CGC" => 'R',
-    "CGA" => 'R',
-    "CGG" => 'R',
-    "AGA" => 'R',
-    "AGG" => 'R',
-    "TCT" => 'S',
-    "TCC" => 'S',
-    "TCA" => 'S',
-    "TCG" => 'S',
-    "AGT" => 'S',
-    "AGC" => 'S',
-    "ACT" => 'T',
-    "ACC" => 'T',
-    "ACA" => 'T',
-    "ACG" => 'T',
-    "GTT" => 'V',
-    "GTC" => 'V',
-    "GTA" => 'V',
-    "GTG" => 'V',
-    "TGG" => 'W',
-    "TAT" => 'Y',
-    "TAC" => 'Y',
-    "TAA" => '-',
-    "TAG" => '-',
-    "TGA" => '-'
-)
-
+"""Structure for sequence data."""
 struct Sequence
     seq::String
     type::String
@@ -126,6 +17,11 @@ Base.length(s::Sequence) = length(s.seq)
 Base.replace(s::Sequence, p::Pair{Char,Char}) = replace(s.seq, p)
 Base.reverse(s::Sequence) = reverse(s.seq)
 
+"""
+    function transcription(dna_seq::Sequence)
+
+Transcribe DNA to RNA.
+"""
 function transcription(dna_seq::Sequence)
     if dna_seq.type != "DNA"
         error("Only DNA sequences can be transcribed.")
@@ -133,6 +29,11 @@ function transcription(dna_seq::Sequence)
     return Sequence(replace(dna_seq, 'T' => 'U'), "RNA")
 end
 
+"""
+    function reverse_complement(s::Sequence)
+
+Reverse complement of given DNA/RNA sequence.
+"""
 function reverse_complement(s::Sequence)
     if (s.type == "AA")
         error("Amino acid sequence doesn't have reverse complement")
@@ -146,6 +47,11 @@ function reverse_complement(s::Sequence)
     return Sequence(string(reverse_complement...), s.type)
 end
 
+"""
+    function kmers(s::Sequence, k::Int64 = 2)
+
+Find all k-mers of given sequence.
+"""
 function kmers(s::Sequence, k::Int64 = 2)
     len = length(s)
     kmer_arr = String[]
@@ -156,6 +62,11 @@ function kmers(s::Sequence, k::Int64 = 2)
     return kmer_arr
 end
 
+"""
+    function kmers_frequency(s::Sequence, k::Int64 = 2)
+
+Calculate frequencies of k-mers of given sequence.
+"""
 function kmers_frequency(s::Sequence, k::Int64 = 2)
     kmers_arr = kmers(s, k)
     unique_kmers = unique(kmers_arr)
@@ -163,6 +74,11 @@ function kmers_frequency(s::Sequence, k::Int64 = 2)
     return kmers_dict
 end
 
+"""
+    function translation(s::Sequence, start_pos::Int64 = 1)
+
+Translate given DNA sequence to Amino Acid sequence.
+"""
 function translation(s::Sequence, start_pos::Int64 = 1)
     if (s.type == "AA")
         error("Amino acid sequence cannot be translated.")
@@ -176,6 +92,11 @@ function translation(s::Sequence, start_pos::Int64 = 1)
     return Sequence(string(translated_seq...), "AA")
 end
 
+"""
+    function reading_frames(s::Sequence)
+
+Find all reading frames of given sequence.
+"""
 function reading_frames(s::Sequence)
     if (s.type == "AA")
         error("Amino acid sequence cannot be translated.")
@@ -189,6 +110,11 @@ function reading_frames(s::Sequence)
     return reading_frames
 end
 
+"""
+    function possible_proteins(s::Sequence)
+
+Find possible proteins of given sequence.
+"""
 function possible_proteins(s::Sequence)
     if (s.type == "AA")
         error("Amino acid sequence cannot be translated.")

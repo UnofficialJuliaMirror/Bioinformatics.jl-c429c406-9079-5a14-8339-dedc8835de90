@@ -1,10 +1,8 @@
-function readStringFromFile(filename::String)
-    s = open(filename) do f
-        read(f, String)
-    end
-    return String(strip(s))
-end
+"""
+    function readFASTA(filename::String)
 
+Parse a FASTA formatted file.
+"""
 function readFASTA(filename::String)
     data = Dict()
     lines = open(filename) do f
