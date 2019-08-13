@@ -1,5 +1,7 @@
 # Bioinformatics.jl
 
+[![Build Status](https://travis-ci.org/mrtkp9993/Bioinformatics.jl.svg?branch=master)](https://travis-ci.org/mrtkp9993/Bioinformatics.jl)
+[![codecov](https://codecov.io/gh/mrtkp9993/Bioinformatics.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/mrtkp9993/Bioinformatics.jl)
 [![GitHub license](https://img.shields.io/github/license/mrtkp9993/Bioinformatics.jl.svg)](https://github.com/mrtkp9993/Bioinformatics.jl/blob/master/LICENSE)
 
 ## Usage
