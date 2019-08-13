@@ -32,7 +32,10 @@ using Test
 
         @test Bioinformatics.kmers(seq, 8) == ["ATGACAGA", "TGACAGAT"]
 
-        @test collect(values(Bioinformatics.possible_proteins(seq)))[1] == Bioinformatics.Sequence("MTD", "AA")
+        @test collect(values(Bioinformatics.possible_proteins(seq)))[1] == Bioinformatics.Sequence(
+            "MTD",
+            "AA"
+        )
     end
 
     @testset "stats.jl" begin

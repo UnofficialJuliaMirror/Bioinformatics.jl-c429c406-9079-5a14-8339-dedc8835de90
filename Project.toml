@@ -2,3 +2,6 @@ name = "Bioinformatics"
 uuid = "c429c406-9079-5a14-8339-dedc8835de90"
 authors = ["Murat Koptur <mkoptur3@gmail.com>"]
 version = "0.1.1"
+
+[deps]
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
