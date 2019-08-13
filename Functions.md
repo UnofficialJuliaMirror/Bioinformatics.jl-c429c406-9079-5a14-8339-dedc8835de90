@@ -75,3 +75,27 @@
 * ```function protein_mass(seq::Sequence, type = "monoisotopic")```
 
   Calculate mass of given amino acid sequence.
+
+* ```function extinction_coeff(n_tyr, n_trp, n_cys::Int64)```
+
+  The extinction coefficient indicates how much light a protein absorbs at a certain wavelength. It is useful to have an estimation of this coefficient for following a protein which a spectrophotometer when purifying it.
+
+* ```function instability_index(seq::Sequence)```
+
+  The instability index provides an estimate of the stability of your protein in a test tube.
+
+* ```function aliphatic_index(x_ala, x_val, x_ile, x_leu::Float64)```
+
+  The aliphatic index of a protein is defined as the relative volume occupied by aliphatic side chains (alanine, valine, isoleucine, and leucine).
+
+* ```function gravy(seq::Sequence)```
+
+  The GRAVY value for a peptide or protein is calculated as the sum of hydropathy values of all the amino acids, divided by the number of residues in the sequence.
+
+* ```function protparam(seq::Sequence)```
+
+  Computes various physico-chemical properties that can be deduced from a protein sequence.
+
+# References
+
+* [ExPASy](https://web.expasy.org/protparam/protparam-doc.html)
