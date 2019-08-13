@@ -1,3 +1,8 @@
+"""
+    function frequency(seq::Sequence)
+
+Count bases / amino acids for given sequence.
+"""
 function frequency(seq::Sequence)
     freqs = Dict([c => 0 for c in alphabets[seq.type]])
     for s in seq.seq
@@ -6,6 +11,11 @@ function frequency(seq::Sequence)
     return freqs
 end
 
+"""
+    function gc_content(seq::Sequence)
+
+Calculate GC-content of given sequence.
+"""
 function gc_content(seq::Sequence)
     gc_count = 0
     for s in seq.seq
@@ -16,6 +26,11 @@ function gc_content(seq::Sequence)
     return gc_count / length(seq)
 end
 
+"""
+    function gc_content(seq::Sequence, window_size::Int64)
+
+Calculate GC-content of given sequence using a window.
+"""
 function gc_content(seq::Sequence, window_size::Int64)
     gc_contents = Float64[]
     for i in 1:(length(seq)-window_size)
@@ -25,6 +40,11 @@ function gc_content(seq::Sequence, window_size::Int64)
     return gc_contents
 end
 
+"""
+    function protein_mass(seq::Sequence, type = "monoisotopic")
+
+Calculate mass of given amino acid sequence.
+"""
 function protein_mass(seq::Sequence, type = "monoisotopic")
     if seq.type != "AA"
         error("Sequence must be a protein sequence.")
@@ -40,10 +60,26 @@ function protein_mass(seq::Sequence, type = "monoisotopic")
     return mass
 end
 
+"""
+    function extinction_coeff(n_tyr, n_trp, n_cys::Int64)
+
+The extinction coefficient indicates how much light a protein absorbs at a
+certain wavelength. It is useful to have an estimation of this coefficient
+for following a protein which a spectrophotometer when purifying it.
+
+See also: https://web.expasy.org/protparam/protparam-doc.html.
+"""
 function extinction_coeff(n_tyr, n_trp, n_cys::Int64)
     return 1490 * n_tyr + 5500 * n_trp + 125 * n_cys
 end
 
+"""
+    function instability_index(seq::Sequence)
+
+The instability index provides an estimate of the stability of your protein in a test tube.
+
+See also: https://web.expasy.org/protparam/protparam-doc.html.
+"""
 function instability_index(seq::Sequence)
     if seq.type != "AA"
         error("Sequence must be a protein sequence.")
@@ -53,10 +89,27 @@ function instability_index(seq::Sequence)
     return ii
 end
 
+"""
+    function aliphatic_index(x_ala, x_val, x_ile, x_leu::Float64)
+
+The aliphatic index of a protein is defined as the relative volume occupied by
+aliphatic side chains (alanine, valine, isoleucine, and leucine).
+
+See also: https://web.expasy.org/protparam/protparam-doc.html.
+"""
 function aliphatic_index(x_ala, x_val, x_ile, x_leu::Float64)
     return x_ala + 2.9 * x_val + 3.9 * (x_ile + x_leu)
 end
 
+"""
+    function gravy(seq::Sequence)
+
+The GRAVY value for a peptide or protein is calculated as the sum of hydropathy
+values of all the amino acids, divided by the number of residues in the
+sequence.
+
+See also: https://web.expasy.org/protparam/protparam-doc.html.
+"""
 function gravy(seq::Sequence)
     if seq.type != "AA"
         error("Sequence must be a protein sequence.")
@@ -64,6 +117,15 @@ function gravy(seq::Sequence)
     return sum([hydropathicity[aa] for aa in seq.seq]) / length(seq)
 end
 
+"""
+    function isoelectric_point(seq::Sequence)
+
+The isoelectric point, is the pH at which a molecule carries no net electrical
+charge or is electrically neutral in the statistical mean.
+
+See also: https://web.expasy.org/protparam/protparam-doc.html,
+http://isoelectric.org/algorithms.html.
+"""
 function isoelectric_point(seq::Sequence)
     if seq.type != "AA"
         error("Sequence must be a protein sequence.")
@@ -132,6 +194,14 @@ function isoelectric_point(seq::Sequence)
     return pH
 end
 
+"""
+    function protparam(seq::Sequence)
+
+Computes various physico-chemical properties that can be deduced from a
+protein sequence.
+
+See also: https://web.expasy.org/protparam/protparam-doc.html.
+"""
 function protparam(seq::Sequence)
     statistics = Dict()
     statistics["Number of amino acids"] = length(seq)

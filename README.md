@@ -16,7 +16,7 @@ or install the library with
 (v1.1) pkg> add "https://github.com/mrtkp9993/Bioinformatics.jl"
 ```
 
-and you're ready to use! For available functions, please refer [here](Functions.md). 
+and you're ready to use! For available functions, please refer [here](). 
 
 ## Contribute
 

@@ -3,6 +3,16 @@ using Test
 
 @testset "Tests" begin
 
+    @testset "distances.jl" begin
+        s1 = "kitten"
+        s2 = "sitting"
+        @test Bioinformatics.edit_dist(s1, s2) == 3
+
+        s3 = "karolin"
+        s4 = "kathrin"
+        @test Bioinformatics.hamming_dist(s3, s4) == 3
+    end
+
     @testset "sequence.jl" begin
         seq = Bioinformatics.Sequence("ATGACAGAT", "DNA")
 
@@ -19,6 +29,10 @@ using Test
             "MTD",
             "AA"
         )
+
+        @test Bioinformatics.kmers(seq, 8) == ["ATGACAGA", "TGACAGAT"]
+
+        @test collect(values(Bioinformatics.possible_proteins(seq)))[1] == Bioinformatics.Sequence("MTD", "AA")
     end
 
     @testset "stats.jl" begin
