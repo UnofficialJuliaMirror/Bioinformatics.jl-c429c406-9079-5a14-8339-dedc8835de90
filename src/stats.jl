@@ -45,6 +45,9 @@ function extinction_coeff(n_tyr, n_trp, n_cys::Int64)
 end
 
 function instability_index(seq::Sequence)
+    if seq.type != "AA"
+        error("Sequence must be a protein sequence.")
+    end
     ii = 10 / length(seq) *
          sum([instability_values[seq[i:(i+1)]] for i in 1:(length(seq)-1)])
     return ii
@@ -55,7 +58,78 @@ function aliphatic_index(x_ala, x_val, x_ile, x_leu::Float64)
 end
 
 function gravy(seq::Sequence)
+    if seq.type != "AA"
+        error("Sequence must be a protein sequence.")
+    end
     return sum([hydropathicity[aa] for aa in seq.seq]) / length(seq)
+end
+
+function isoelectric_point(seq::Sequence)
+    if seq.type != "AA"
+        error("Sequence must be a protein sequence.")
+    end
+    counts = Dict(
+        'D' => 0,
+        'E' => 0,
+        'C' => 0,
+        'Y' => 0,
+        'H' => 0,
+        'K' => 0,
+        'R' => 0
+    )
+    for aa in seq.seq
+        if haskey(counts, aa)
+            counts[aa] += 1
+        end
+    end
+
+    NQ = 0.0
+    QN1 = 0
+    QN2 = 0
+    QN3 = 0
+    QN4 = 0
+    QN5 = 0
+    QP1 = 0
+    QP2 = 0
+    QP3 = 0
+    QP4 = 0
+
+    pH = 6.5
+    pHprev = 0.0
+    pHnext = 14.0
+    X = 0.0
+    E = 0.01
+    temp = 0.0
+
+    while true
+        QN1 = -1 / (1 + 10^(3.65 - pH))
+        QN2 = -counts['D'] / (1 + 10^(3.9 - pH))
+        QN3 = -counts['E'] / (1 + 10^(4.07 - pH))
+        QN4 = -counts['C'] / (1 + 10^(8.18 - pH))
+        QN5 = -counts['Y'] / (1 + 10^(10.46 - pH))
+        QP1 = counts['H'] / (1 + 10^(pH - 6.04))
+        QP2 = 1 / (1 + 10^(pH - 8.2))
+        QP3 = counts['K'] / (1 + 10^(pH - 10.54))
+        QP4 = counts['R'] / (1 + 10^(pH - 12.48))
+
+        NQ = QN1 + QN2 + QN3 + QN4 + QN5 + QP1 + QP2 + QP3 + QP4
+        if pH >= 14.0
+            error("pH is higher than 14!")
+        end
+        if NQ < 0
+            temp = pH
+            pH -= (pH - pHprev) / 2
+            pHnext = temp
+        else
+            temp = pH
+            pH += (pHnext - pH) / 2
+            pHprev = temp
+        end
+        if (pH - pHprev < E) && (pHnext - pH < E)
+            break
+        end
+    end
+    return pH
 end
 
 function protparam(seq::Sequence)
@@ -63,10 +137,10 @@ function protparam(seq::Sequence)
     statistics["Number of amino acids"] = length(seq)
     statistics["Molecular weight"] = protein_mass(seq, "average")
     statistics["Amino acid composition"] = frequency(seq)
-    statistics["Total number of negatively charged residues (Asp + Glu)"] = statistics["Amino acid composition"]['D'] +
-                                                                            statistics["Amino acid composition"]['E']
-    statistics["Total number of positively charged residues (Arg + Lys)"] = statistics["Amino acid composition"]['R'] +
-                                                                            statistics["Amino acid composition"]['K']
+    statistics["# of negatively charged residues"] = statistics["Amino acid composition"]['D'] +
+                                                     statistics["Amino acid composition"]['E']
+    statistics["# of positively charged residues"] = statistics["Amino acid composition"]['R'] +
+                                                     statistics["Amino acid composition"]['K']
     statistics["Extinction coefficient"] = extinction_coeff(
         statistics["Amino acid composition"]['Y'],
         statistics["Amino acid composition"]['W'],

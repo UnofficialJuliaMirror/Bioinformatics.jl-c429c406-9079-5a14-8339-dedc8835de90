@@ -92,6 +92,10 @@
 
   The GRAVY value for a peptide or protein is calculated as the sum of hydropathy values of all the amino acids, divided by the number of residues in the sequence.
 
+* ```function isoelectric_point(seq::Sequence)```
+
+  The isoelectric point, is the pH at which a molecule carries no net electrical charge or is electrically neutral in the statistical mean.
+
 * ```function protparam(seq::Sequence)```
 
   Computes various physico-chemical properties that can be deduced from a protein sequence.
@@ -99,3 +103,4 @@
 # References
 
 * [ExPASy](https://web.expasy.org/protparam/protparam-doc.html)
+* [Isoelectric](http://isoelectric.org/algorithms.html)
