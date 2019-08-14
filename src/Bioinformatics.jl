@@ -1,10 +1,8 @@
 __precompile__()
 module Bioinformatics
 
-export aliphatic_index,
-       dotmatrix,
+export dotmatrix,
        edit_dist,
-       extinction_coeff,
        frequency,
        gravy,
        gc_content,
@@ -19,6 +17,8 @@ export aliphatic_index,
        reading_frames,
        reverse_complement,
        Sequence,
+       skew,
+       skew_plot,
        transcription,
        translation
 

@@ -41,6 +41,27 @@ function gc_content(seq::Sequence, window_size::Int64)
 end
 
 """
+    function skew(seq::Sequence)
+
+Calculate the skew values of sequence.
+"""
+function skew(seq::Sequence)
+    len = length(seq)
+    skew = Int[]
+    current_skew = 0
+    push!(skew, current_skew)
+    for i in 1:len
+        if seq[i] == 'G'
+            current_skew += 1
+        elseif seq[i] == 'C'
+            current_skew -= 1
+        end
+        push!(skew, current_skew)
+    end
+    return skew
+end
+
+"""
     function protein_mass(seq::Sequence, type = "monoisotopic")
 
 Calculate mass of given amino acid sequence.
