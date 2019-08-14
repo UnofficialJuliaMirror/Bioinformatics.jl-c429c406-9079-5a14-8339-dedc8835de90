@@ -55,7 +55,7 @@ using Test
         @test round(gc_content, digits = 2) == 0.61
 
         seq = Bioinformatics.Sequence(
-            collect(values(Bioinformatics.readFASTA("./example_data/P35858.fasta")))[1],
+            collect(values(Bioinformatics.readFASTA("../example_data/P35858.fasta")))[1],
             "AA"
         )
         seq_stats = Bioinformatics.protparam(seq)
