@@ -10,6 +10,9 @@ julia:
   - 1.2
   - nightly
 
+before_script:
+  - cd /home/travis/build/mrtkp9993/Bioinformatics.jl
+
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())';
 
