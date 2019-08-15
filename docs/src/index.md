@@ -9,4 +9,5 @@ end
 
 ```@autodocs
 Modules = [Bioinformatics]
+Private = false
 ```

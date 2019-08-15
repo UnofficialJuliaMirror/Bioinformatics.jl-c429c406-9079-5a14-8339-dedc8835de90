@@ -49,7 +49,6 @@ function skew(seq::Sequence)
     len = length(seq)
     skew = Int[]
     current_skew = 0
-    push!(skew, current_skew)
     for i in 1:len
         if seq[i] == 'G'
             current_skew += 1
@@ -59,6 +58,16 @@ function skew(seq::Sequence)
         push!(skew, current_skew)
     end
     return skew
+end
+
+"""
+    function minimum_skew(seq::Sequence)
+
+Find genome positions where the skew is minimum.
+"""
+function minimum_skew(seq::Sequence)
+    skew_values = skew(seq)
+    return findall(a -> a == minimum(skew_values), skew_values)
 end
 
 """
