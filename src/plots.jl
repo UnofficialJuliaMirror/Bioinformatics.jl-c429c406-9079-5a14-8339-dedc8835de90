@@ -26,7 +26,7 @@ end
 Plot skew diagram for given sequence.
 """
 function skew_plot(seq::Sequence)
-    x = 1:(length(seq)+1)
+    x = 1:length(seq)
     y = skew(seq)
     plot(x, y, title = "Skew Diagram", labels=["Skew"], xlabel="Position", ylabel="Skew")
 end

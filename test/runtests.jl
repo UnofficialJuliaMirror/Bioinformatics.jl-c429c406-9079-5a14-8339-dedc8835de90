@@ -1,5 +1,5 @@
 include("../src/Bioinformatics.jl")
-using Test
+using Plots, Test
 
 @testset "Tests" begin
 
@@ -11,6 +11,24 @@ using Test
         s3 = "karolin"
         s4 = "kathrin"
         @test Bioinformatics.hamming_dist(s3, s4) == 3
+    end
+
+    @testset "plots.jl" begin
+        ENV["PLOTS_TEST"] = "true"
+        ENV["GKSwstype"] = "100"
+
+        s1 = Bioinformatics.Sequence("CGATATAGATT", "DNA")
+        s2 = Bioinformatics.Sequence("TATATAGTAT", "DNA")
+
+        mat = Bioinformatics.dotmatrix(s1, s2)
+        plot = Bioinformatics.plot_dotmatrix(mat)
+        @test isa(plot, Plots.Plot) == true
+        @test isa(display(plot), Nothing) == true
+
+        seq = Bioinformatics.Sequence("CATGGGCATCGGCCATACGCC", "DNA")
+        plot = Bioinformatics.skew_plot(seq)
+        @test isa(plot, Plots.Plot) == true
+        @test isa(display(plot), Nothing) == true
     end
 
     @testset "sequence.jl" begin
