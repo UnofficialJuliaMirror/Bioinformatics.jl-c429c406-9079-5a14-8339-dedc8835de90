@@ -29,6 +29,10 @@ using Plots, Test
         plot = Bioinformatics.skew_plot(seq)
         @test isa(plot, Plots.Plot) == true
         @test isa(display(plot), Nothing) == true
+
+        plot = Bioinformatics.plot_gc_content(seq, 7)
+        @test isa(plot, Plots.Plot) == true
+        @test isa(display(plot), Nothing) == true
     end
 
     @testset "sequence.jl" begin
