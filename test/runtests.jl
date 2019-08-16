@@ -13,6 +13,11 @@ using Plots, Test
         @test Bioinformatics.hamming_dist(s3, s4) == 3
     end
 
+    @testset "io.jl" begin
+        seq = Bioinformatics.readFASTA("../example_data/NC_000017.fasta")
+        @test length(collect(seq)) == 1
+    end
+
     @testset "plots.jl" begin
         ENV["PLOTS_TEST"] = "true"
         ENV["GKSwstype"] = "100"
