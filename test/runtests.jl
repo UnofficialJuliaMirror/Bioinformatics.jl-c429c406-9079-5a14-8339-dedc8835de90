@@ -63,6 +63,14 @@ using Plots, Test
             "MTD",
             "AA"
         )
+
+        seq = Bioinformatics.Sequence("ACDEFGHIKLMNPQRSTVWY", "AA")
+        @test_throws ErrorException Bioinformatics.transcription(seq)
+        @test_throws ErrorException Bioinformatics.reverse_complement(seq)
+        @test_throws ErrorException Bioinformatics.translation(seq)
+        @test_throws ErrorException Bioinformatics.reading_frames(seq)
+        @test_throws ErrorException Bioinformatics.possible_proteins(seq)
+
     end
 
     @testset "stats.jl" begin
