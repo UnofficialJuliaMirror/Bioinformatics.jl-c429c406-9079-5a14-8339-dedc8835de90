@@ -24,10 +24,10 @@ export dotmatrix,
        translation
 
 include("sequence.jl")
+include("io.jl")
 include("data.jl")
 include("alignments.jl")
 include("distances.jl")
-include("io.jl")
 include("plots.jl")
 include("stats.jl")
 
