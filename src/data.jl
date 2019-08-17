@@ -1,3 +1,5 @@
+using Pkg
+
 const alphabets = Dict(
     "DNA" => "ACGTMRWSYKVHDBN",
     "RNA" => "ACGUMRWSYKVHDBN",
@@ -581,12 +583,57 @@ const hydropathicity = Dict(
     'V' => 4.200
 )
 
-const BLOSUM45 = parse_substitution_matrix("src/data/BLOSUM45")
-const BLOSUM50 = parse_substitution_matrix("src/data/BLOSUM50")
-const BLOSUM62 = parse_substitution_matrix("src/data/BLOSUM62")
-const BLOSUM80 = parse_substitution_matrix("src/data/BLOSUM80")
-const BLOSUM90 = parse_substitution_matrix("src/data/BLOSUM90")
-const BLOSUM100 = parse_substitution_matrix("src/data/BLOSUM100")
-const PAM30 = parse_substitution_matrix("src/data/PAM30")
-const PAM70 = parse_substitution_matrix("src/data/PAM70")
-const PAM250 = parse_substitution_matrix("src/data/PAM250")
+const BLOSUM45 = parse_substitution_matrix(joinpath(
+    Pkg.dir("Bioinformatics"),
+    "src",
+    "data",
+    "BLOSUM45"
+))
+const BLOSUM50 = parse_substitution_matrix(joinpath(
+    Pkg.dir("Bioinformatics"),
+    "src",
+    "data",
+    "BLOSUM50"
+))
+const BLOSUM62 = parse_substitution_matrix(joinpath(
+    Pkg.dir("Bioinformatics"),
+    "src",
+    "data",
+    "BLOSUM62"
+))
+const BLOSUM80 = parse_substitution_matrix(joinpath(
+    Pkg.dir("Bioinformatics"),
+    "src",
+    "data",
+    "BLOSUM80"
+))
+const BLOSUM90 = parse_substitution_matrix(joinpath(
+    Pkg.dir("Bioinformatics"),
+    "src",
+    "data",
+    "BLOSUM90"
+))
+const BLOSUM100 = parse_substitution_matrix(joinpath(
+    Pkg.dir("Bioinformatics"),
+    "src",
+    "data",
+    "BLOSUM100"
+))
+const PAM30 = parse_substitution_matrix(joinpath(
+    Pkg.dir("Bioinformatics"),
+    "src",
+    "data",
+    "PAM30"
+))
+const PAM70 = parse_substitution_matrix(joinpath(
+    Pkg.dir("Bioinformatics"),
+    "src",
+    "data",
+    "PAM70"
+))
+const PAM250 = parse_substitution_matrix(joinpath(
+    Pkg.dir("Bioinformatics"),
+    "src",
+    "data",
+    "PAM250"
+))

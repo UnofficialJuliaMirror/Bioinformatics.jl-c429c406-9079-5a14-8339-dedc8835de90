@@ -1,5 +1,5 @@
 include("../src/Bioinformatics.jl")
-using Plots, Test
+using Plots, Pkg, Test
 
 @testset "Tests" begin
 
@@ -14,7 +14,7 @@ using Plots, Test
     end
 
     @testset "io.jl" begin
-        seq = Bioinformatics.readFASTA("../example_data/NC_000017.fasta")
+        seq = Bioinformatics.readFASTA(joinpath(Pkg.dir("Bioinformatics"), "example_data", "NC_000017.fasta"))
         @test length(collect(seq)) == 1
     end
 
