@@ -3,6 +3,15 @@ using Plots, Pkg, Test
 
 @testset "Tests" begin
 
+    @testset "alignments.jl" begin
+        seq1 = "LGPSSGCASRIWTKSA"
+        seq2 = "TGPSGS----IWSKSG"
+        g = -8
+        r = -2
+        score_affin = Bioinformatics.score_affine_gap(seq1, seq2, Bioinformatics.BLOSUM62, g, r)
+        @assert score_affin == 27
+    end
+
     @testset "distances.jl" begin
         s1 = "kitten"
         s2 = "sitting"
