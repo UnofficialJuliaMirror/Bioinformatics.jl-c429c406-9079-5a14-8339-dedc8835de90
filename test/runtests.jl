@@ -4,11 +4,17 @@ using Plots, Pkg, Test
 @testset "Tests" begin
 
     @testset "alignments.jl" begin
-        seq1="AND"
-        seq2="SEND"
+        seq1 = Bioinformatics.Sequence("AND", "AA")
+        seq2 = Bioinformatics.Sequence("SEND", "AA")
         sm = Bioinformatics.BLOSUM62
         mat = Bioinformatics.global_alignment_linear_gap(seq1, seq2, sm, 10)
         @assert mat[length(seq1)+1, length(seq2)+1] == 3
+
+        seq1 = Bioinformatics.Sequence("HEAGAWGHEE", "AA")
+        seq2 = Bioinformatics.Sequence("PAWHEAE", "AA")
+        sm = Bioinformatics.BLOSUM50
+        mat = Bioinformatics.global_alignment_linear_gap(seq1, seq2, sm, 8)
+        @assert mat[length(seq1)+1, length(seq2)+1] == 1
     end
 
     @testset "distances.jl" begin
@@ -22,7 +28,11 @@ using Plots, Pkg, Test
     end
 
     @testset "io.jl" begin
-        seq = Bioinformatics.readFASTA(joinpath(Pkg.dir("Bioinformatics"), "example_data", "NC_000017.fasta"))
+        seq = Bioinformatics.readFASTA(joinpath(
+            Pkg.dir("Bioinformatics"),
+            "example_data",
+            "NC_000017.fasta"
+        ))
         @test length(collect(seq)) == 1
     end
 

@@ -20,15 +20,15 @@ end
 
 Needleman-Wunsch algorithm with linear gap penalty.
 """
-function global_alignment_linear_gap(seq1, seq2, sm, d)
+function global_alignment_linear_gap(seq1::Sequence, seq2::Sequence, sm, d)
     m = length(seq1) + 1
     n = length(seq2) + 1
     mat = zeros(m, n)
     for i in 1:m
-        mat[i, 1] = -(i-1) * d
+        mat[i, 1] = -(i - 1) * d
     end
     for j in 1:n
-        mat[1, j] = -(j-1) * d
+        mat[1, j] = -(j - 1) * d
     end
     for j in 2:n
         for i in 2:m
