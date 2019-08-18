@@ -4,12 +4,11 @@ using Plots, Pkg, Test
 @testset "Tests" begin
 
     @testset "alignments.jl" begin
-        seq1 = "LGPSSGCASRIWTKSA"
-        seq2 = "TGPSGS----IWSKSG"
-        g = -8
-        r = -2
-        score_affin = Bioinformatics.score_affine_gap(seq1, seq2, Bioinformatics.BLOSUM62, g, r)
-        @assert score_affin == 27
+        seq1="AND"
+        seq2="SEND"
+        sm = Bioinformatics.BLOSUM62
+        mat = Bioinformatics.global_alignment_linear_gap(seq1, seq2, sm, 10)
+        @assert mat[length(seq1)+1, length(seq2)+1] == 3
     end
 
     @testset "distances.jl" begin
