@@ -1,7 +1,7 @@
 name = "Bioinformatics"
 uuid = "c429c406-9079-5a14-8339-dedc8835de90"
 authors = ["Murat Koptur <mkoptur3@gmail.com>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [compat]
 julia = "1"
