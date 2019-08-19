@@ -1,9 +1,15 @@
 import Base.==
 
+@enum SequenceType begin
+    DNA = 1
+    RNA = 2
+    AA = 3
+end
+
 """Structure for sequence data."""
 struct Sequence
     seq::String
-    type::String
+    type::SequenceType
     Sequence(seq, type) =
         all(base -> base in alphabets[type], uppercase(seq)) ?
         new(uppercase(seq), type) : error("String is not a valid $type string!")
@@ -23,10 +29,10 @@ Base.reverse(s::Sequence) = reverse(s.seq)
 Transcribe DNA to RNA.
 """
 function transcription(dna_seq::Sequence)
-    if dna_seq.type != "DNA"
+    if dna_seq.type != DNA
         error("Only DNA sequences can be transcribed.")
     end
-    return Sequence(replace(dna_seq, 'T' => 'U'), "RNA")
+    return Sequence(replace(dna_seq, 'T' => 'U'), RNA)
 end
 
 """
@@ -35,7 +41,7 @@ end
 Reverse complement of given DNA/RNA sequence.
 """
 function reverse_complement(s::Sequence)
-    if (s.type == "AA")
+    if (s.type == AA)
         error("Amino acid sequence doesn't have reverse complement")
     end
     len = length(s)
@@ -80,7 +86,7 @@ end
 Translate given DNA sequence to Amino Acid sequence.
 """
 function translation(s::Sequence, start_pos::Int64 = 1)
-    if (s.type == "AA")
+    if (s.type == AA)
         error("Amino acid sequence cannot be translated.")
     end
     len = length(s)
@@ -89,7 +95,7 @@ function translation(s::Sequence, start_pos::Int64 = 1)
         cod = s[i:i+2]
         push!(translated_seq, codons[cod])
     end
-    return Sequence(string(translated_seq...), "AA")
+    return Sequence(string(translated_seq...), AA)
 end
 
 """
@@ -98,7 +104,7 @@ end
 Find all reading frames of given sequence.
 """
 function reading_frames(s::Sequence)
-    if (s.type == "AA")
+    if (s.type == AA)
         error("Amino acid sequence cannot be translated.")
     end
     reading_frames = Dict{String,Sequence}()
@@ -116,7 +122,7 @@ end
 Find possible proteins of given sequence.
 """
 function possible_proteins(s::Sequence)
-    if (s.type == "AA")
+    if (s.type == AA)
         error("Amino acid sequence cannot be translated.")
     end
     regex = r"M[ACDEFGHIKLMNPQRSTVWY]+(?=-|$)"
@@ -125,7 +131,7 @@ function possible_proteins(s::Sequence)
     for k in keys(rfs)
         m = match(regex, rfs[k].seq)
         if m != nothing
-            possible_proteins[k] = Sequence(m.match, "AA")
+            possible_proteins[k] = Sequence(m.match, AA)
         end
     end
     return possible_proteins

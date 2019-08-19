@@ -76,7 +76,7 @@ end
 Calculate mass of given amino acid sequence.
 """
 function protein_mass(seq::Sequence, type = "monoisotopic")
-    if seq.type != "AA"
+    if seq.type != AA
         error("Sequence must be a protein sequence.")
     end
     if type == "monoisotopic"
@@ -111,7 +111,7 @@ The instability index provides an estimate of the stability of your protein in a
 See also: https://web.expasy.org/protparam/protparam-doc.html.
 """
 function instability_index(seq::Sequence)
-    if seq.type != "AA"
+    if seq.type != AA
         error("Sequence must be a protein sequence.")
     end
     ii = 10 / length(seq) *
@@ -141,7 +141,7 @@ sequence.
 See also: https://web.expasy.org/protparam/protparam-doc.html.
 """
 function gravy(seq::Sequence)
-    if seq.type != "AA"
+    if seq.type != AA
         error("Sequence must be a protein sequence.")
     end
     return sum([hydropathicity[aa] for aa in seq.seq]) / length(seq)
@@ -157,7 +157,7 @@ See also: https://web.expasy.org/protparam/protparam-doc.html,
 http://isoelectric.org/algorithms.html.
 """
 function isoelectric_point(seq::Sequence)
-    if seq.type != "AA"
+    if seq.type != AA
         error("Sequence must be a protein sequence.")
     end
     counts = Dict(

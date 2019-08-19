@@ -4,17 +4,17 @@ using Plots, Pkg, Test
 @testset "Tests" begin
 
     @testset "alignments.jl" begin
-        seq1 = Bioinformatics.Sequence("AND", "AA")
-        seq2 = Bioinformatics.Sequence("SEND", "AA")
+        seq1 = Bioinformatics.Sequence("AND", Bioinformatics.AA)
+        seq2 = Bioinformatics.Sequence("SEND", Bioinformatics.AA)
         sm = Bioinformatics.BLOSUM62
         mat = Bioinformatics.global_alignment_linear_gap(seq1, seq2, sm, 10)
-        @assert mat[length(seq1)+1, length(seq2)+1] == 3
+        @test mat[length(seq1)+1, length(seq2)+1] == 3
 
-        seq1 = Bioinformatics.Sequence("HEAGAWGHEE", "AA")
-        seq2 = Bioinformatics.Sequence("PAWHEAE", "AA")
+        seq1 = Bioinformatics.Sequence("HEAGAWGHEE", Bioinformatics.AA)
+        seq2 = Bioinformatics.Sequence("PAWHEAE", Bioinformatics.AA)
         sm = Bioinformatics.BLOSUM50
         mat = Bioinformatics.global_alignment_linear_gap(seq1, seq2, sm, 8)
-        @assert mat[length(seq1)+1, length(seq2)+1] == 1
+        @test mat[length(seq1)+1, length(seq2)+1] == 1
     end
 
     @testset "distances.jl" begin
@@ -40,15 +40,15 @@ using Plots, Pkg, Test
         ENV["PLOTS_TEST"] = "true"
         ENV["GKSwstype"] = "100"
 
-        s1 = Bioinformatics.Sequence("CGATATAGATT", "DNA")
-        s2 = Bioinformatics.Sequence("TATATAGTAT", "DNA")
+        s1 = Bioinformatics.Sequence("CGATATAGATT", Bioinformatics.DNA)
+        s2 = Bioinformatics.Sequence("TATATAGTAT", Bioinformatics.DNA)
 
         mat = Bioinformatics.dotmatrix(s1, s2)
         plot = Bioinformatics.plot_dotmatrix(mat)
         @test isa(plot, Plots.Plot) == true
         @test isa(display(plot), Nothing) == true
 
-        seq = Bioinformatics.Sequence("CATGGGCATCGGCCATACGCC", "DNA")
+        seq = Bioinformatics.Sequence("CATGGGCATCGGCCATACGCC", Bioinformatics.DNA)
         plot = Bioinformatics.skew_plot(seq)
         @test isa(plot, Plots.Plot) == true
         @test isa(display(plot), Nothing) == true
@@ -59,30 +59,30 @@ using Plots, Pkg, Test
     end
 
     @testset "sequence.jl" begin
-        seq = Bioinformatics.Sequence("ATGACAGAT", "DNA")
+        seq = Bioinformatics.Sequence("ATGACAGAT", Bioinformatics.DNA)
 
         @test Bioinformatics.transcription(seq) == Bioinformatics.Sequence(
             "AUGACAGAU",
-            "RNA"
+            Bioinformatics.RNA
         )
         @test Bioinformatics.reverse_complement(seq) == Bioinformatics.Sequence(
             "ATCTGTCAT",
-            "DNA"
+            Bioinformatics.DNA
         )
 
         @test Bioinformatics.translation(seq) == Bioinformatics.Sequence(
             "MTD",
-            "AA"
+            Bioinformatics.AA
         )
 
         @test Bioinformatics.kmers(seq, 8) == ["ATGACAGA", "TGACAGAT"]
 
         @test collect(values(Bioinformatics.possible_proteins(seq)))[1] == Bioinformatics.Sequence(
             "MTD",
-            "AA"
+            Bioinformatics.AA
         )
 
-        seq = Bioinformatics.Sequence("ACDEFGHIKLMNPQRSTVWY", "AA")
+        seq = Bioinformatics.Sequence("ACDEFGHIKLMNPQRSTVWY", Bioinformatics.AA)
         @test_throws ErrorException Bioinformatics.transcription(seq)
         @test_throws ErrorException Bioinformatics.reverse_complement(seq)
         @test_throws ErrorException Bioinformatics.translation(seq)
@@ -92,7 +92,7 @@ using Plots, Pkg, Test
     end
 
     @testset "stats.jl" begin
-        seq = Bioinformatics.Sequence("atagataactcgcatag", "DNA")
+        seq = Bioinformatics.Sequence("atagataactcgcatag", Bioinformatics.DNA)
 
         freqs = Bioinformatics.frequency(seq)
         @test freqs['A'] == 7
@@ -102,14 +102,14 @@ using Plots, Pkg, Test
 
         seq = Bioinformatics.Sequence(
             "CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGG",
-            "DNA"
+            Bioinformatics.DNA
         )
         gc_content = Bioinformatics.gc_content(seq)
         @test round(gc_content, digits = 2) == 0.61
 
         seq = Bioinformatics.Sequence(
             collect(values(Bioinformatics.readFASTA("../example_data/P35858.fasta")))[1],
-            "AA"
+            Bioinformatics.AA
         )
         seq_stats = Bioinformatics.protparam(seq)
         @test seq_stats["Number of amino acids"] == 605

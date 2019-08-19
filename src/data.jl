@@ -1,13 +1,13 @@
 using Pkg
 
 const alphabets = Dict(
-    "DNA" => "ACGTMRWSYKVHDBN",
-    "RNA" => "ACGUMRWSYKVHDBN",
-    "AA" => "ACDEFGHIKLMNPQRSTVWY-"
+    DNA => "ACGTMRWSYKVHDBN",
+    RNA => "ACGUMRWSYKVHDBN",
+    AA => "ACDEFGHIKLMNPQRSTVWY-"
 )
 
 const complements = Dict(
-    "DNA" => Dict(
+    DNA => Dict(
         'A' => 'T',
         'C' => 'G',
         'G' => 'C',
@@ -24,7 +24,7 @@ const complements = Dict(
         'V' => 'B',
         'N' => 'N'
     ),
-    "RNA" => Dict(
+    RNA => Dict(
         'A' => 'U',
         'C' => 'G',
         'G' => 'C',
