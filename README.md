@@ -21,6 +21,14 @@ or install the library with
 
 and you're ready to use!
 
+## Features
+
+* Global alignment (Needleman-Wunsch algorithm with linear gap penalty)
+* Dotplots
+* Transcription, Reverse Complement, Translation, Open reading frames (ORFs)
+* GC-content, minimum skew
+* Protein mass, Extinction coefficient, Instability index, Isoelectric point, Grand average of hydropathicity (GRAVY) statistics of protein sequences
+
 ## Documentation
 
 Please refer [here](https://mrtkp9993.github.io/Bioinformatics.jl/latest/).
